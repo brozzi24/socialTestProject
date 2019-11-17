@@ -1,7 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 
 
 # Create your views here.
 def feed(request):
-    return render(request,'feed/feed.html')
+    # Check if user is sign in
+    if request.user.is_authenticated:
+        return render(request,'feed/feed.html')
+    else:
+        return redirect('signIn')
