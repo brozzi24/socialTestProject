@@ -10,3 +10,4 @@ def feed(request):
         return render(request,'feed/feed.html')
     else:
         return redirect('signIn')
+
