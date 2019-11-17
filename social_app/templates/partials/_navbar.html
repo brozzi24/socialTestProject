@@ -1,5 +1,12 @@
 <nav class="navbar navbar-dark bg-dark">
     <a href="{% url 'feed' %}" class="navbar-brand">Social Feed</a>
-    <a href="{% url 'signIn' %}" class="nav-item ml-auto">Sign In</a>
-    <a href="{% url 'register' %}" class="nav-item ml-auto">register</a>
+    {% if user.is_authenticated %}
+        <span class="nav-item ml-auto">(Hello {{ user.username }}!) <a href="#" id="trigger">logout</a></span>
+        <form action="{% url 'signOut' %}" method="POST" id="logout">
+            {% csrf_token %}
+            <input type="hidden">
+        </form>
+    {% else %}
+        <a href="{% url 'signIn' %}" class="nav-item ml-auto">Sign In</a>
+    {% endif %}
 </nav>

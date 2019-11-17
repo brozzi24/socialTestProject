@@ -3,10 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 
 # Create your views here.
-def signIn(request):
-    return render(request,'accounts/signIn.html')
-
-
 def register(request):
     if request.method == 'POST':
         # Get the required form data
@@ -36,3 +32,27 @@ def register(request):
                     return render(request,'feed/feed.html')
     else:
         return render(request,'accounts/register.html')
+
+def signIn(request):
+    if request.method == 'POST':
+        # Get the required form data
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Authenticate user
+        user = auth.authenticate(username=username,password=password)
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request,'You are now logged in')
+            return redirect('feed')
+        else:
+            messages.error(request,'Invalid Credentials')
+            return redirect('signIn')
+    else:
+        return render(request, 'accounts/signIn.html')
+
+def signOut(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        messages.success(request,'You are now logged out')
+        return redirect('signIn')
