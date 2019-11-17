@@ -1,0 +1,53 @@
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 mt-5">
+                <div class="text-center">
+                    <h2>Create a Post</h2>                
+                </div>
+                <form action="">
+                    <label for="post">Enter Text:</label>
+                    <textarea class="form-control" name="post" cols="30" rows="5" placeholder="Example Post"></textarea>
+                    <div class="text-center">
+                        <button class="btn btn-success mt-3" type="submit">Post</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 mt-5 postBox">
+                <h5>
+                    Brozzi24
+                    <br>
+                    <small class="text-muted">Nov. 12, 2019, 6:30PM </small>
+                </h5>
+                <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <hr class="customHr">
+                <div class="text-center"><strong>Comments</strong></div>
+                <hr class="customHr">
+                <div class="commentBox mb-1">
+                    <strong>
+                        Bmrozzi
+                        <small class="text-muted">Nov. 13, 2019, 9:00PM</small>
+                    </strong>
+                    <p class="mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+                <form action="">
+                    <label for="comment">Comment:</label>
+                    <textarea class="form-control" name="comment" cols="30" rows="5" placeholder="Type Comment Here"></textarea>
+                    <div class="text-center">
+                        <button class="btn btn-success mt-3" type="submit">Comment</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

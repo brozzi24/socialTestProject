@@ -1,0 +1,30 @@
+body {
+    background-color: #e9ebee;
+}
+
+.postBox {
+    width: 100%;
+    border: 1px solid ;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.commentBox {
+    width: 100%;
+    border: 1px solid ;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #e9ebee;
+}
+
+.customHr {
+    margin: 10px 0px;
+}
+
+.commentBody {
+    background-color: #e9ebee;
+    margin-left: 0;
+    
+}
+

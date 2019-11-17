@@ -11,8 +11,3 @@ RUN mkdir /social_app
 WORKDIR /social_app
 # Copy the social app to the dir in the docker image
 COPY ./social_app /social_app
-
-
-
-
-
