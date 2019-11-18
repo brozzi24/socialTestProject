@@ -29,7 +29,7 @@ def register(request):
                     # Everything looks good create user object and save
                     user = User.objects.create_user(email=email,username=username,password=password1)
                     user.save()
-                    return render(request,'feed/feed.html')
+                    return render(request,'accounts/signIn.html')
     else:
         return render(request,'accounts/register.html')
 
