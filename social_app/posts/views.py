@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.models import User, auth
+from django.core.mail import send_mail
 from .models import Post, Comment
 
 # Create your views here.
@@ -24,10 +26,26 @@ def createPost(request):
     if request.method == "POST" and request.user.is_authenticated:
         # Get Form data
         text = request.POST['post']
-        user = request.user
-        post = Post(text=text,author=user)
+        author = request.user
+        post = Post(text=text,author=author)
         post.save()
         messages.success(request,'Your post has been added')
+        # Send email to let users know of new post
+        users = User.objects.all()
+        user_email_list = []
+        for user in users:
+            # Don't send email to creater of post
+            if user.email != author.email:
+                user_email_list.append(user.email)
+        # Check user email list is not empty 
+        if user_email_list:
+            send_mail(
+                'New Post!',
+                '{} has created a new post: \n {}'.format(author.username, text),
+                'no-reply@testproject.com',
+                user_email_list,
+                fail_silently=False,
+            )
         return redirect('feed')
     else:
         messages.error('user is not authenticated')

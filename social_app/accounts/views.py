@@ -29,6 +29,7 @@ def register(request):
                     # Everything looks good create user object and save
                     user = User.objects.create_user(email=email,username=username,password=password1)
                     user.save()
+                    messages.success(request,'You are registerd now! Please sign in to view feed!')
                     return render(request,'accounts/signIn.html')
     else:
         return render(request,'accounts/register.html')
@@ -48,6 +49,8 @@ def signIn(request):
         else:
             messages.error(request,'Invalid Credentials')
             return redirect('signIn')
+    if request.user.is_authenticated:
+        return redirect('feed')
     else:
         return render(request, 'accounts/signIn.html')
 
