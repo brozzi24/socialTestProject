@@ -18,7 +18,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.CharField(max_length=150)
+    text = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     created = models.DateTimeField(default=datetime.now)
 

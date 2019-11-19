@@ -1,4 +1,5 @@
     {% extends 'base.html' %}
+    {% load crispy_forms_tags %}
     {% block content %}
     {% include 'partials/_alerts.html' %}
     <div class="container">
@@ -8,25 +9,36 @@
                 <div class="text-center">
                     <h2>Create a Post</h2>                
                 </div>
+                <!-- CREATE POST FORM -->
                 <form action="{% url 'createPost' %}" method="POST">
                     {% csrf_token %}
-                    <label for="post">Enter Text:</label>
-                    <textarea class="form-control" name="post" cols="30" rows="5" placeholder="Example Post"></textarea>
+                    {{ postForm.text | as_crispy_field }}
                     <div class="text-center">
                         <button class="btn btn-success mt-3" type="submit">Post</button>
                     </div>
                 </form>
+                <!-- END CREATE POST FORM -->
             </div>
             <div class="col-md-2"></div>
         </div>
     </div>
     <hr>
+    <!-- LOOP FOR POST -->
     {% for post in posts %}
         <div class="container">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8 mt-5 postBox">
                     <h5>
+                        <!-- DELETE OPTION FOR POSTS -->
+                        {% if post.author.id == user_id %}
+                            <form action="{% url 'deletePost' %}" method="POST" id="deletePost">
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{ post.id }}">
+                                <button class="iconButton float-right" type="submit"><i class="fa fa-trash"></i></button>
+                            </form>
+                        {% endif %}
+                        <!-- END DELETE OPTION FOR POSTS-->
                         {{post.author}}
                         <br>
                         <small class="text-muted">{{ post.created }}</small>
@@ -35,9 +47,19 @@
                     <hr class="customHr">
                     <div class="text-center"><strong>Comments</strong></div>
                     <hr class="customHr">
+                    <!-- LOOP FOR COMMENTS OF A POST -->
                     {% for comment in comments %}
                         {% if comment.post.id == post.id %}
                             <div class="commentBox mb-1">
+                                <!-- DELETE OPTION FOR COMMENTS-->
+                                {% if comment.author.id == user_id %}
+                                    <form action="{% url 'deleteComment' %}" method="POST" id="deleteComment">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                        <button class="iconButton float-right" type="submit"><i class="fa fa-trash float-right"></i></button>
+                                    </form>
+                                {% endif %}
+                                <!-- END DELETE OPTION FOR COMMENTS-->
                                 <strong>
                                     {{comment.author}}
                                     <small class="text-muted">{{ comment.created }}</small>
@@ -46,11 +68,12 @@
                             </div>
                         {% endif %}
                     {% endfor %}
+                    <!-- END OF COMMENTS LOOP -->
                     <form action="{% url 'createComment'%}" method="POST">
                         {% csrf_token %}
                         <label for="comment">Comment:</label>
                         <input type="hidden" name="post_id" value="{{post.id}}">
-                        <textarea class="form-control" name="comment" cols="30" rows="5" placeholder="Type Comment Here"></textarea>
+                        {{ commentForm.text | as_crispy_field }}
                         <div class="text-center">
                             <button class="btn btn-success mt-3" type="submit">Comment</button>
                         </div>
@@ -60,4 +83,5 @@
             </div>
         </div>
     {% endfor %}
+    <!-- END LOOP FOR POSTS -->
 {% endblock %}

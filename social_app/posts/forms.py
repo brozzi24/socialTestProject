@@ -2,13 +2,15 @@ from django import forms
 from .models import Post, Comment
 
 
-class roomForm(forms.ModelForm):
+class postForm(forms.ModelForm):
     class Meta:
-        model = models.Post
+        model = Post
         fields = ['text']
 
-# test
-class roomForm(forms.ModelForm):
+
+
+class commentForm(forms.ModelForm):
     class Meta:
-        model = models.Comment
-        fields = ['']
+        model = Comment
+        fields = ['text']
+        widgets = {'text': forms.Textarea(attrs={'rows': 4, 'cols': 30})}

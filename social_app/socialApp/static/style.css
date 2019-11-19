@@ -31,3 +31,13 @@ body {
 nav span {
     color: #fff;
 }
+
+.fa-trash:hover {
+    color: red;
+}
+
+.iconButton {
+    background: none;
+    padding: 0px;
+    border: none;
+  }
