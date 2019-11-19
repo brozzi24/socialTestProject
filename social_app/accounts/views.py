@@ -1,58 +1,52 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from . import forms
 
 # Create your views here.
 def register(request):
-    if request.method == 'POST':
-        # Get the required form data
-        email = request.POST['email']
-        username = request.POST['username']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-
-        # Check if email is already in use
-        if User.objects.filter(email=email).exists():
-            messages.error(request,'The email you entered is already in use')
-            return redirect('register')
-        else:
-            # Check if username is already in use
-            if User.objects.filter(username=username).exists():
-                messages.error(request, 'The username {} is already take'.format(username))
-                return redirect('register')
-            else:
-                # Check if passwords do not match
-                if password1 != password2:
-                    messages.error(request, 'The passwords you entered do not match')
-                    return redirect('register')
-                else:
-                    # Everything looks good create user object and save
-                    user = User.objects.create_user(email=email,username=username,password=password1)
-                    user.save()
-                    messages.success(request,'You are registerd now! Please sign in to view feed!')
-                    return render(request,'accounts/signIn.html')
-    else:
-        return render(request,'accounts/register.html')
-
-def signIn(request):
-    if request.method == 'POST':
-        # Get the required form data
-        username = request.POST['username']
-        password = request.POST['password']
-
-        # Authenticate user
-        user = auth.authenticate(username=username,password=password)
-        if user is not None:
-            auth.login(request, user)
-            messages.success(request,'You are now logged in')
-            return redirect('feed')
-        else:
-            messages.error(request,'Invalid Credentials')
-            return redirect('signIn')
+    # Make sure user can only access when signed out
     if request.user.is_authenticated:
         return redirect('feed')
+    if request.method == 'POST':
+        # Get form data
+        form = forms.RegisterForm(request.POST)
+        # Check if form input is valid
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Your account has been registered, please sign in!')
+            return redirect('signIn')
+        else:
+            # Return back to the register page with the error messages
+            return render(request,'accounts/register.html', {'form':form})
     else:
-        return render(request, 'accounts/signIn.html')
+        form = forms.RegisterForm
+        context = {
+            'form': form,
+        }
+        return render(request,'accounts/register.html',context)
+
+
+def signIn(request):
+    # Make sure user can only access when signed out
+    if request.user.is_authenticated:
+        return redirect('feed')
+    if request.method == 'POST':
+        # Get form data
+        form = forms.SignInForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = auth.authenticate(username=username,password=password)
+            auth.login(request,user)
+            messages.success(request,'You are now signed in!')
+            return redirect('feed')
+        else:
+            return render(request,'accounts/signIn.html',{'form':form})
+    else:
+        form = forms.SignInForm
+        return render(request, 'accounts/signIn.html', {'form':form})
 
 def signOut(request):
     if request.method == 'POST':

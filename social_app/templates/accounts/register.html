@@ -1,4 +1,5 @@
     {% extends 'base.html' %}
+    {% load crispy_forms_tags %}
     {% block content %}
     {% include 'partials/_alerts.html' %}
     <div class="container">
@@ -8,20 +9,16 @@
                 <form action="{% url 'register' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" name="email" class="form-control" placeholder="Please enter you email here">
+                        {{ form.email | as_crispy_field }}
                     </div>
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="Please enter a username">
+                        {{ form.username | as_crispy_field }}
                     </div>
                     <div class="form-group">
-                        <label for="password1">Password</label>
-                        <input type="password"  name="password1" class="form-control" placeholder="Please enter a password">
+                        {{ form.password1 | as_crispy_field }}
                     </div>
                     <div class="form-group">
-                        <label for="password2">Re-type Password</label>
-                        <input type="password"  name="password2" class="form-control" placeholder="Please re-enter a password">
+                        {{ form.password2 | as_crispy_field }}
                         <small>Already have an account? Sign in <a href="{% url 'signIn' %}">here</a></small>
                     </div>
                     <div class="text-center">

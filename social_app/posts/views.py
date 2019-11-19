@@ -43,7 +43,7 @@ def createPost(request):
                 'New Post!',
                 '{} has created a new post: \n {}'.format(author.username, text),
                 'no-reply@testproject.com',
-                user_email_list,
+                set(user_email_list),
                 fail_silently=False,
             )
         return redirect('feed')
