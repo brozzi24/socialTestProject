@@ -8,9 +8,11 @@ def register(request):
     # Make sure user can only access when signed out
     if request.user.is_authenticated:
         return redirect('feed')
+
     if request.method == 'POST':
         # Get form data
         form = forms.RegisterForm(request.POST)
+        
         # Check if form input is valid
         if form.is_valid():
             form.save()
@@ -30,11 +32,11 @@ def register(request):
 def signIn(request):
     # Make sure user can only access when signed out
     if request.user.is_authenticated:
+        messages.success(request, 'You are already signed in')
         return redirect('feed')
     if request.method == 'POST':
         # Get form data
         form = forms.SignInForm(request.POST)
-
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -49,7 +51,9 @@ def signIn(request):
         return render(request, 'accounts/signIn.html', {'form':form})
 
 def signOut(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
         auth.logout(request)
         messages.success(request,'You are now logged out')
+        return redirect('signIn')
+    else:
         return redirect('signIn')
