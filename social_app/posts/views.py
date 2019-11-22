@@ -98,8 +98,10 @@ def deletePost(request):
             messages.success(request, "Post has been deleted")
             return redirect("feed")
         else:
+            messages.error(request,'You select a post to delete')
             return redirect("feed")
     else:
+        messages.error(request,'You must be signed in to delete a post')
         return redirect("signIn")
 
 
@@ -150,6 +152,8 @@ def deleteComment(request):
             messages.success(request, "Comment has been deleted")
             return redirect("feed")
         else:
+            messages.error(request,'You select a comment to delete')
             return redirect("feed")
     else:
+        messages.error(request, 'You must be signed in to delete a comment')
         return redirect("signIn")
