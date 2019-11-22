@@ -1,12 +1,10 @@
 from django.test import SimpleTestCase
 from posts.forms import postForm, commentForm
 
-class TestForm(SimpleTestCase):
 
+class TestForm(SimpleTestCase):
     def test_post_form(self):
-        form = postForm(data={
-            'text': 'Mason Rudolph started it'
-        })
+        form = postForm(data={"text": "Mason Rudolph started it"})
 
         self.assertTrue(form.is_valid())
 
@@ -14,12 +12,10 @@ class TestForm(SimpleTestCase):
         form = postForm(data={})
 
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors),1)
-    
+        self.assertEquals(len(form.errors), 1)
+
     def test_comment_form(self):
-        form = commentForm(data={
-            'text': 'Free Myles Garrett'
-        })
+        form = commentForm(data={"text": "Free Myles Garrett"})
 
         self.assertTrue(form.is_valid())
 
@@ -27,4 +23,4 @@ class TestForm(SimpleTestCase):
         form = commentForm(data={})
 
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors),1)
+        self.assertEquals(len(form.errors), 1)

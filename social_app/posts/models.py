@@ -10,11 +10,12 @@ class Post(models.Model):
 
     # To order the post by newest first
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def __str__(self):
         name = "{} {}".format(self.id, self.author)
         return name
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

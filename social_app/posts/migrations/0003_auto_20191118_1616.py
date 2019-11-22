@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0002_auto_20191117_1857'),
+        ("posts", "0002_auto_20191117_1857"),
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='post',
-            options={'ordering': ('-created',)},
-        ),
+        migrations.AlterModelOptions(name="post", options={"ordering": ("-created",)},),
     ]
