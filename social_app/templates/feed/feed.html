@@ -45,7 +45,7 @@
                     </h5>
                     <p class="mt-4">{{post.text}}</p>
                     <hr class="customHr">
-                    <div class="text-center"><strong>Comments</strong></div>
+                    <div class="text-center"><strong>Comments ({{comment_count}})</strong></div>
                     <hr class="customHr">
                     <!-- LOOP FOR COMMENTS OF A POST -->
                     {% for comment in comments %}
@@ -82,6 +82,18 @@
                 <div class="col-md-2"></div>
             </div>
         </div>
+        {% empty %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="postBox text-center">
+                            <h3>No Posts Yet :(</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
     {% endfor %}
     <!-- END LOOP FOR POSTS -->
 {% endblock %}

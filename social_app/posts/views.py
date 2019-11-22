@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
-from django.http import HttpResponse
+
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.core.mail import send_mail
@@ -13,6 +13,7 @@ def feed(request):
         # Get all posts and comments
         posts = Post.objects.all()
         comments = Comment.objects.all()
+        comment_count = Comment.objects.count()
 
         # Get user id for delete
         user_id = request.user.id
@@ -23,6 +24,7 @@ def feed(request):
         context = {
             'posts': posts,
             'comments': comments,
+            'comment_count': comment_count,
             'user_id': user_id,
             'postForm': postForm,
             'commentForm': commentForm,
