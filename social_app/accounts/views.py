@@ -6,6 +6,7 @@ from . import forms
 # Create your views here.
 def register(request):
     # Make sure user can only access when signed out
+    count = 0
     if request.user.is_authenticated:
         return redirect("feed")
 
