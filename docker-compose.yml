@@ -1,6 +1,12 @@
 version: "3"
 
 services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Brandon24
+      POSTGRES_DB: postgres
   web:
     build:
       context: .
@@ -11,5 +17,3 @@ services:
     command: sh -c "python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
-  db:
-    image: postgres
